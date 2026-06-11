@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block title %}
+Registro
+{% endblock %}
+{% block content %}
+<h2>
+Registro de Alumno
+</h2>
+<form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button
+        type="submit"
+        class="btn btn-primary">
+        Registrarse
+    </button>
+</form>
+{% endblock %}
