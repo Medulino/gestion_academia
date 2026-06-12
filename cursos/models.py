@@ -1,7 +1,7 @@
 from django.db import models
-from django.db import models
 from profesores.models import Profesor
 from django.core.exceptions import ValidationError
+
 
 # Create your models here.
 class Curso(models.Model):
@@ -20,12 +20,11 @@ class Curso(models.Model):
 
     def __str__(self):
         return self.nombre
-    
-    def clean(self):
-        if self.fecha_fin < self.fecha_inicio:
-            raise ValidationError(
-                "La fecha final no puede ser anterior a la inicial"
-            )
 
+    def clean(self):
+        # 3. Lógica de validación
+        if self.fecha_fin and self.fecha_inicio:
+            if self.fecha_fin < self.fecha_inicio:
+                raise ValidationError("La fecha final no puede ser anterior a la inicial.")
 
 
