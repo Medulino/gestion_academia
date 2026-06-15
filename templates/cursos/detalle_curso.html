@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ curso.nombre }}
+{% endblock %}
+{% block content %}
+<div class="card">
+    {% if curso.imagen %}
+    <img src="{{ curso.imagen.url }}" class="card-img-top" alt="{{ curso.nombre }}">
+    {% endif %}
+    <div class="card-body">
+        <h1>
+            {{ curso.nombre }}
+        </h1>
+        <hr>
+        <p>
+            <strong>Profesor:</strong>
+            {{ curso.profesor }}
+        </p>
+        <p>
+            <strong>Fecha inicio:</strong>
+            {{ curso.fecha_inicio }}
+        </p>
+        <p>
+            <strong>Fecha fin:</strong>
+            {{ curso.fecha_fin }}
+        </p>
+        <p>
+            <strong>Plazas:</strong>
+            {{ curso.plazas }}
+        </p>
+        <hr>
+        <p>
+            {{ curso.descripcion }}
+        </p>
+    </div>
+</div>
+{% endblock %}

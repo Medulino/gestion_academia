@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Cursos{% endblock %}
+{% block content %}
+<h1 class="mb-4">Oferta Formativa</h1>
+<div class="row">
+    {% for curso in cursos %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            {% if curso.imagen %}
+            <img src="{{ curso.imagen.url }}" class="card-img-top" alt="{{ curso.nombre }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ curso.nombre }}</h5>
+                <p class="card-text">{{ curso.descripcion|truncatewords:20 }}</p>
+                <p class="text-muted">Cursos disponibles: {{ total_cursos }}</p>
+                <p class="text-muted">Profesor: {{ curso.profesor }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'detalle_curso' curso.id %}" class="btn btn-primary">Ver curso</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-warning">
+        No existen cursos disponibles.
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
