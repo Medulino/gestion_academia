@@ -66,6 +66,12 @@ def dashboard(request):
         .order_by('-fecha_matricula')[:5]
     )
     
+    cursos_disponibles = (
+    Curso.objects.filter(
+        activo=True
+    ).count()
+    
+    )
     # Optimización: Al iniciar desde Curso, reducimos los saltos del JOIN
     proximo_curso = (
         Curso.objects.filter(matriculas__alumno=request.user)
@@ -84,6 +90,7 @@ def dashboard(request):
             'total_matriculas': total_matriculas,
             'ultimas_matriculas': ultimas_matriculas,
             'proximo_curso': proximo_curso,
+            'cursos_disponibles':cursos_disponibles
         }
     )
 

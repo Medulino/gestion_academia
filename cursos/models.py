@@ -23,7 +23,6 @@ class Curso(models.Model):
         return self.nombre
 
     def clean(self):
-        # 3. Lógica de validación
         if self.fecha_fin and self.fecha_inicio:
             if self.fecha_fin < self.fecha_inicio:
                 raise ValidationError("La fecha final no puede ser anterior a la inicial.")

@@ -10,16 +10,17 @@
             PostgreSQL y Bootstrap.
         </p>
         {% if user.is_authenticated %}
-            <div class="alert alert-success">
-                Bienvenido
+        <div class="alert alert-success">
+            Bienvenido
+            <strong>
                 {{ user.first_name }}
-            </div>
+                {{ user.last_name }}
+            </strong>
+        </div>
         {% else %}
-            <a
-                href="{% url 'registro' %}"
-                class="btn btn-primary btn-lg">
-                Registrarse
-            </a>
+        <a href="{% url 'registro' %}" class="btn btn-primary btn-lg">
+            Registrarse
+        </a>
         {% endif %}
     </div>
 </div>
