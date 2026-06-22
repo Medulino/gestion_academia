@@ -40,6 +40,7 @@ class CursoAdmin(admin.ModelAdmin):
                     "nombre",
                     "descripcion",
                     "profesor",
+                    "slug",
                 )
             },
         ),

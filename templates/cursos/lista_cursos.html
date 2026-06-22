@@ -1,6 +1,26 @@
 {% extends 'base.html' %}
 {% block title %}Cursos{% endblock %}
 {% block content %}
+<form method="get">
+    <div class="input-group mb-4">
+        <input type="text" name="buscar" class="form-control" placeholder="Buscar curso"
+            value="{{ request.GET.buscar }}">
+        <select name="profesor" class="form-select">
+            <option value="">
+                Todos los profesores
+            </option>
+            {% for profesor in profesores %}
+            <option value="{{ profesor.id }}">
+                {{ profesor }}
+            </option>
+            {% endfor %}
+        </select>
+        <button class="btn btn-primary" type="submit">
+            Buscar
+        </button>
+    </div>
+</form>
+
 <h1 class="mb-4">Oferta Formativa</h1>
 <div class="row">
     {% for curso in cursos %}
@@ -16,14 +36,44 @@
                 <p class="text-muted">Profesor: {{ curso.profesor }}</p>
             </div>
             <div class="card-footer">
-                <a href="{% url 'detalle_curso' curso.id %}" class="btn btn-primary">Ver curso</a>
+                <a href="{% url 'detalle_curso' curso.slug %}" class="btn btn-primary">Ver curso</a>
             </div>
         </div>
     </div>
     {% empty %}
-    <div class="alert alert-warning">
-        No existen cursos disponibles.
+    <div class="col-12">
+        <div class="alert alert-warning">
+            No existen cursos disponibles.
+        </div>
     </div>
     {% endfor %}
 </div>
+<nav>
+    <ul class="pagination">
+        {% if cursos.has_previous %}
+        <li class="page-item">
+            <!-- Añadimos los parámetros actuales a la URL del enlace anterior -->
+            <a class="page-link"
+                href="?page={{ cursos.previous_page_number }}&buscar={{ request.GET.buscar }}&profesor={{ request.GET.profesor }}">
+                Anterior
+            </a>
+        </li>
+        {% endif %}
+        <li class="page-item active">
+            <span class="page-link">
+                {{ cursos.number }}
+            </span>
+        </li>
+        {% if cursos.has_next %}
+        <li class="page-item">
+            <!-- Añadimos los parámetros actuales a la URL del enlace siguiente -->
+            <a class="page-link"
+                href="?page={{ cursos.next_page_number }}&buscar={{ request.GET.buscar }}&profesor={{ request.GET.profesor }}">
+                Siguiente
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+
 {% endblock %}

@@ -30,26 +30,23 @@
                         <a class="nav-link" href="{% url 'inicio' %}">
                             Inicio
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'lista_cursos' %}">
-                            Cursos
-                        </a>
-                    </li>
+
                 </ul>
                 <div>
                     {% if user.is_authenticated %}
                     <span class="text-white me-3">
                         {{ user.username }}
                     </span>
-                    <a href="{% url 'lista_cursos' %}" class="btn btn-success">
-                        Ver Cursos
                     </a>
                     {% if user.tipo == 'alumno' %}
                     <a href="{% url 'dashboard' %}" class="btn btn-primary me-2">
                         Dashboard
                     </a>
 
+                    <a href="{% url 'lista_cursos' %}" class="btn btn-success">
+                        Ver Cursos
+
+                    </a>
                     {% endif %}
                     <a href="{% url 'mis_cursos' %}" class="btn btn-warning me-2">
                         Mis Cursos

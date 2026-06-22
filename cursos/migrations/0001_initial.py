@@ -27,6 +27,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('profesor', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='cursos', to='profesores.profesor')),
+                ('slug', models.SlugField(unique=True)),
             ],
         ),
     ]

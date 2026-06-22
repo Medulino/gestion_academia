@@ -1,7 +1,7 @@
 from django.db import models
 from profesores.models import Profesor
 from django.core.exceptions import ValidationError
-
+from django.utils.text import slugify
 
 # Create your models here.
 class Curso(models.Model):
@@ -18,6 +18,10 @@ class Curso(models.Model):
     imagen = models.ImageField(upload_to="cursos/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    slug = models.SlugField(
+    unique=True
+    )
 
     def __str__(self):
         return self.nombre
@@ -28,3 +32,12 @@ class Curso(models.Model):
                 raise ValidationError("La fecha final no puede ser anterior a la inicial.")
 
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(
+                self.nombre
+            )
+        super().save(
+            *args,
+            **kwargs
+        )
