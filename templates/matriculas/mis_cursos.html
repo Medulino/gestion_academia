@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}
+Mis Cursos
+{% endblock %}
+{% block content %}
+<h1>
+    Mis Cursos
+</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Curso</th>
+            <th>Profesor</th>
+            <th>Fecha inicio</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for matricula in matriculas %}
+        <tr>
+            <td>
+                {{ matricula.curso.nombre }}
+            </td>
+            <td>
+                {{ matricula.curso.profesor }}
+            </td>
+            <td>
+                {{ matricula.curso.fecha_inicio }}
+            </td>
+            <td>
+                <a href="{% url 'cancelar_matricula' matricula.id %}" class="btn btn-danger btn-sm" onclick="return confirm(
+'¿Desea cancelar esta matrícula?'
+)">
+                    Cancelar
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">
+                No tienes cursos matriculados.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -14,6 +14,7 @@ class Curso(models.Model):
     fecha_fin = models.DateField()
     plazas = models.PositiveIntegerField(default=20)
     activo = models.BooleanField(default=True)
+    
     imagen = models.ImageField(upload_to="cursos/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

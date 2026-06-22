@@ -15,14 +15,14 @@
 
 <body>
 
+    <!-- Menú de Navegación -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="{% url 'inicio' %}">
                 Gestión Formación
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-                <span class="navbar-toggler-icon">
-                </span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="navbar-nav me-auto">
@@ -42,6 +42,19 @@
                     <span class="text-white me-3">
                         {{ user.username }}
                     </span>
+                    <a href="{% url 'lista_cursos' %}" class="btn btn-success">
+                        Ver Cursos
+                    </a>
+                    {% if user.tipo == 'alumno' %}
+                    <a href="{% url 'dashboard' %}" class="btn btn-primary me-2">
+                        Dashboard
+                    </a>
+
+                    {% endif %}
+                    <a href="{% url 'mis_cursos' %}" class="btn btn-warning me-2">
+                        Mis Cursos
+                    </a>
+
                     <form method="post" action="{% url 'logout' %}" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger">
@@ -55,17 +68,33 @@
                     <a href="{% url 'login' %}" class="btn btn-primary">
                         Login
                     </a>
+
                     {% endif %}
                 </div>
             </div>
         </div>
     </nav>
 
+    <!-- Bloque de Mensajes de Django -->
+    <div class="container mt-3">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Contenido Principal -->
     <div class="container mt-4">
         {% block content %}
         {% endblock %}
     </div>
 
     {% bootstrap_javascript %}
+
+</body>
 
 </html>

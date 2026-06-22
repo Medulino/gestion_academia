@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}
+Dashboard
+{% endblock %}
+{% block content %}
+<h1 class="mb-4">
+    Dashboard Alumno
+</h1>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>
+                    Cursos Matriculados
+                </h5>
+                <h1>
+                    {{ total_matriculas }}
+                </h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h3>
+                    Últimas Matrículas
+                </h3>
+                <ul>
+                    {% for matricula in ultimas_matriculas %}
+                    <li>
+                        {{ matricula.curso.nombre }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5>Próximo Curso</h5>
+                <p>
+                    {% if proximo_curso %}
+                    {{ proximo_curso.nombre }}
+                    {% else %}
+                    Sin datos
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

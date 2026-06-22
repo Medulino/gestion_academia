@@ -28,10 +28,25 @@
             <strong>Plazas:</strong>
             {{ curso.plazas }}
         </p>
+        <p>
+            <strong>Plazas ocupadas:</strong>
+            {{ ocupadas }}
+            /
+            {{ curso.plazas }}
+        </p>
         <hr>
         <p>
             {{ curso.descripcion }}
         </p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'matricularse' curso.id %}" class="btn btn-success">
+            Matricularme
+        </a>
+        {% else %}
+        <div class="alert alert-info">
+            Debes iniciar sesión para matricularte.
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
