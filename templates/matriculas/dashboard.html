@@ -1,61 +1,72 @@
 {% extends 'base.html' %}
-{% block title %}
-Dashboard
-{% endblock %}
+{% block title %}Dashboard{% endblock %}
+
 {% block content %}
-<h1 class="mb-4">
-    Dashboard Alumno
-</h1>
-<div class="row">
-    <div class="col-md-4">
-        <div class="card text-center">
+<h1 class="mb-4">Dashboard Alumno</h1>
+
+<div class="row g-4"> <!-- g-4 añade una separación limpia entre tarjetas -->
+
+    <!-- Tarjeta 1: Cursos Matriculados -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card text-center h-100 shadow-sm">
             <div class="card-body">
-                <h5>
-                    Cursos Matriculados
-                </h5>
-                <h1>
-                    {{ total_matriculas }}
-                </h1>
+                <h5 class="text-muted">Cursos Matriculados</h5>
+                <h1 class="display-4 fw-bold text-primary">{{ total_matriculas }}</h1>
+                <a href="{% url 'mis_cursos' %}" class="btn btn-sm btn-outline-primary mt-2">Ver mis cursos</a>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card">
+
+    <!-- Tarjeta 2: Cursos Disponibles -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card text-center h-100 shadow-sm">
             <div class="card-body">
-                <h3>
-                    Últimas Matrículas
-                </h3>
-                <ul>
+                <h5 class="text-muted">Cursos Disponibles</h5>
+                <h1 class="display-4 fw-bold text-success">{{ cursos_disponibles }}</h1>
+                <a href="{% url 'lista_cursos' %}" class="btn btn-sm btn-outline-success mt-2">Ver catálogo</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjeta 3: Próximo Curso -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div>
+                    <h5 class="text-muted">Próximo Curso</h5>
+                    {% if proximo_curso %}
+                    <p class="fw-bold mb-1">{{ proximo_curso.nombre }}</p>
+                    <small class="text-muted">Inicio: {{ proximo_curso.fecha_inicio|date:"d/m/Y" }}</small>
+                    {% else %}
+                    <p class="text-muted">No tienes próximos cursos.</p>
+                    {% endif %}
+                </div>
+                {% if proximo_curso %}
+                <a href="{% url 'detalle_curso' proximo_curso.slug %}" class="btn btn-sm btn-primary mt-3">Ir al
+                    curso</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Tarjeta 4: Últimas Matrículas -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="text-muted mb-3">Últimas Matrículas</h5>
+                <ul class="list-unstyled mb-0">
                     {% for matricula in ultimas_matriculas %}
-                    <li>
+                    <li class="text-truncate mb-1">
+                        <i class="bi bi-check-circle-fill text-success me-1"></i> <!-- Icono opcional -->
                         {{ matricula.curso.nombre }}
                     </li>
+                    {% empty %}
+                    <li class="text-muted small">Sin registros recientes.</li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5>Próximo Curso</h5>
-                <p>
-                    {% if proximo_curso %}
-                    {{ proximo_curso.nombre }}
-                    {% else %}
-                    Sin datos
-                    {% endif %}
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card text-center">
-            <div class="card-body" <h5>
-                Cursos Disponibles
-                </h5>
-                <h2>
-                    {{ cursos_disponibles }}
-                </h2>
-            </div>
-            {% endblock %}
+
+</div>
+{% endblock %}

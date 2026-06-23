@@ -13,13 +13,15 @@ def matricularse(request, curso_id):
     # Validación de tipo de usuario
     if getattr(request.user, 'tipo', None) != "alumno":
         messages.error(request, "Sólo los alumnos pueden matricularse.")
-        return redirect("detalle_curso", curso_id=curso.id)
+        # MODIFICADO: Se usa slug en lugar de curso_id
+        return redirect("detalle_curso", slug=curso.slug)
 
     # Validación de aforo disponible
     inscritos = curso.matriculas.count()
     if inscritos >= curso.plazas:
         messages.error(request, "No quedan plazas disponibles para este curso.")
-        return redirect("detalle_curso", curso_id=curso.id)
+        # MODIFICADO: Se usa slug en lugar de curso_id
+        return redirect("detalle_curso", slug=curso.slug)
 
     # Registro seguro de la matrícula
     matricula, creada = Matricula.objects.get_or_create(
@@ -32,7 +34,8 @@ def matricularse(request, curso_id):
     else:
         messages.warning(request, "Ya estás matriculado en este curso.")
 
-    return redirect("detalle_curso", curso_id=curso.id)
+    # MODIFICADO: Se usa slug en lugar de curso_id
+    return redirect("detalle_curso", slug=curso.slug)
 
 
 @login_required

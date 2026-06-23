@@ -28,11 +28,13 @@ Mis Cursos
                 {{ matricula.curso.fecha_inicio }}
             </td>
             <td>
-                <a href="{% url 'cancelar_matricula' matricula.id %}" class="btn btn-danger btn-sm" onclick="return confirm(
-'¿Desea cancelar esta matrícula?'
-)">
-                    Cancelar
-                </a>
+                <form method="post" action="{% url 'cancelar_matricula' matricula.id %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('¿Desea cancelar esta matrícula?')">
+                        Cancelar
+                    </button>
+                </form>
             </td>
         </tr>
         {% empty %}

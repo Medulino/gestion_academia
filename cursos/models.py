@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 # Create your models here.
 class Curso(models.Model):
-    nombre = models.CharField(max_length=200)
+    nombre = models.CharField(max_length=200,db_index=True)
     descripcion = models.TextField()
     profesor = models.ForeignKey(
         Profesor, on_delete=models.PROTECT, related_name="cursos"

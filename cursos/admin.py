@@ -5,6 +5,11 @@ from django.utils.html import format_html
 
 @admin.register(Curso)
 class CursoAdmin(admin.ModelAdmin):
+    prepopulated_fields = {
+    'slug': (
+        'nombre',
+    )
+    }
     list_display = (
         "miniatura",
         "nombre",
@@ -31,6 +36,8 @@ class CursoAdmin(admin.ModelAdmin):
         return "-"
 
     miniatura.short_description = "Imagen"
+
+
 
     fieldsets = (
         (

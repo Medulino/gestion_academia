@@ -1,5 +1,3 @@
-from urllib import request
-
 from django.shortcuts import render, get_object_or_404
 from .models import Curso
 from django.db.models import Q
@@ -10,9 +8,23 @@ def lista_cursos(request):
     busqueda = request.GET.get('buscar', '')
     profesor_id = request.GET.get('profesor','')
 
+    cursos = Curso.objects.select_related(
+    'profesor',
+    'profesor__usuario'
+    ).filter(activo=True)
 
-    cursos = Curso.objects.filter(activo=True)
     profesores = Profesor.objects.all()
+
+
+
+    if busqueda:
+        cursos = cursos.filter(
+            Q(nombre__icontains=busqueda) | 
+            Q(descripcion__icontains=busqueda)
+        )
+
+    if profesor_id:
+        cursos= cursos.filter(profesor_id=profesor_id)
 
     paginator = Paginator(
         cursos,
@@ -27,15 +39,6 @@ def lista_cursos(request):
         page_number
     )
 
-    if busqueda:
-        cursos = cursos.filter(
-            Q(nombre__icontains=busqueda) | 
-            Q(descripcion__icontains=busqueda)
-        )
-
-    if profesor_id:
-        cursos= cursos.filter(profesor_id=profesor_id)
-
     return render(
         request, 
         'cursos/lista_cursos.html', 
@@ -46,6 +49,7 @@ def lista_cursos(request):
             'profesor_id' : profesor_id
         }
     )
+    
 
 
 
