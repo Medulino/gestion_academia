@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Curso
-from django.db.models import Q
+from django.db.models import Q,Count
 from profesores.models import Profesor
 from django.core.paginator import Paginator
 
@@ -8,10 +8,16 @@ def lista_cursos(request):
     busqueda = request.GET.get('buscar', '')
     profesor_id = request.GET.get('profesor','')
 
-    cursos = Curso.objects.select_related(
-    'profesor',
-    'profesor__usuario'
-    ).filter(activo=True)
+    cursos = (
+            Curso.objects.filter(
+                activo=True)
+            .annotate(
+                total_alumnos=Count(
+                    'matriculas'
+                )
+            )
+        )
+
 
     profesores = Profesor.objects.all()
 

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>
+    Mis Cursos
+</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Curso</th>
+            <th>Plazas</th>
+            <th>Matriculados</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for curso in cursos %}
+        <tr>
+            <td>
+                {{ curso.nombre }}
+            </td>
+            <td>
+                {{ curso.plazas }}
+            </td>
+            <td>
+                {{ curso.matriculas.count }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

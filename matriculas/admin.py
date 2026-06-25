@@ -3,27 +3,32 @@ from datetime import timedelta
 from django.utils import timezone
 from cursos.models import Curso
 from matriculas.models import Matricula
+from django.db.models import Count
+
 
 @admin.register(Matricula)
 class MatriculaAdmin(admin.ModelAdmin):
     list_display = (
-        'alumno',
-        'curso',
-        'fecha_matricula',
+        "alumno",
+        "curso",
+        "fecha_matricula",
+       
     )
     search_fields = (
-        'alumno__username',
-        'curso__nombre',
+        "alumno__username",
+        "curso__nombre",
     )
-    ordering = (
-        '-fecha_matricula',
+    ordering = ("-fecha_matricula",)
+
+    cursos_disponibles = Curso.objects.filter(activo=True).count()
+    def alumnos(self, obj):
+        return (
+        obj.matriculas.count()
+    )
+    alumnos.short_description = (
+    'Alumnos'
     )
 
-    cursos_disponibles = (
-    Curso.objects.filter(
-        activo=True
-    ).count()
-    )
 
 class FiltroFechas(admin.SimpleListFilter):
     title = "Fecha inicio"
@@ -37,19 +42,14 @@ class FiltroFechas(admin.SimpleListFilter):
             ("mes", "Este mes"),
             ("anio", "Este año"),
         )
-    
+
     list_filter = (
-    'curso',
-    'fecha_matricula',
+        "curso",
+        "fecha_matricula",
     )
-    date_hierarchy = (
-    'fecha_matricula'
-    )
+    date_hierarchy = "fecha_matricula"
 
-    readonly_fields = (
-    'fecha_matricula',
-)
-
+    readonly_fields = ("fecha_matricula",)
 
     def queryset(self, request, queryset):
         now = timezone.now()

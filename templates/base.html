@@ -34,6 +34,14 @@
                 </ul>
                 <div>
                     {% if user.is_authenticated %}
+                    {% if user.tipo == 'profesor' %}
+                    <a href="{% url 'dashboard_profesor' %}" class="btn btn-info me-2">
+                        Panel Profesor
+                    </a>
+                    <a href="{% url 'mis_cursos_profesor' %}" class="btn btn-secondary me-2">
+                        Mis Cursos
+                    </a>
+                    {% endif %}
                     <span class="text-white me-3">
                         {{ user.username }}
                     </span>
@@ -47,10 +55,12 @@
                         Ver Cursos
 
                     </a>
-                    {% endif %}
+
                     <a href="{% url 'mis_cursos' %}" class="btn btn-warning me-2">
                         Mis Cursos
                     </a>
+                    {% endif %}
+
 
                     <form method="post" action="{% url 'logout' %}" class="d-inline">
                         {% csrf_token %}

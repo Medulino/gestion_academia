@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from profesores.views import mis_cursos_profesor
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +27,8 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('cursos/',include('cursos.urls')),
     path('matriculas/',include('matriculas.urls')),
+    path('profesores/',include('profesores.urls')),
+    path('mis-cursos/',mis_cursos_profesor,name='mis_cursos_profesor'),
 ]
 
 # Las imágenes y archivos estáticos se añaden a la lista existente, sin borrarla

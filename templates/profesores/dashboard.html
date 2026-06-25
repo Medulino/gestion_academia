@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard Profesor
+{% endblock %}
+
+{% block content %}
+<h1>
+    Dashboard Profesor
+</h1>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5>
+                    Cursos impartidos
+                </h5>
+                <h2>
+                    {{ total_cursos }}
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5>
+                    Alumnos matriculados
+                </h5>
+                <h2>
+                    {{ total_alumnos }}
+                </h2>
+                <p>
+                    {% if curso_popular %}
+                    {{ curso_popular.nombre }}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -14,8 +14,6 @@ class CursoAdmin(admin.ModelAdmin):
         "miniatura",
         "nombre",
         "profesor",
-        "fecha_inicio",
-        "fecha_fin",
         "activo",
     )
     search_fields = (
@@ -29,6 +27,10 @@ class CursoAdmin(admin.ModelAdmin):
         "fecha_inicio",
     )
     ordering = ("nombre",)
+ 
+    list_editable = (
+    'activo',
+    )
 
     def miniatura(self, obj):
         if obj.imagen:
@@ -36,6 +38,14 @@ class CursoAdmin(admin.ModelAdmin):
         return "-"
 
     miniatura.short_description = "Imagen"
+
+    def alumnos(self, obj):
+       return (
+        obj.matriculas.count()
+    )
+    alumnos.short_description = (
+    'Alumnos'
+    )
 
 
 
